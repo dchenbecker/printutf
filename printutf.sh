@@ -20,10 +20,7 @@ cat > $TEMPTEX <<EOF
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \pagestyle{fancy}
-\lhead{\bfseries Subject: $SUBJECT\\\\\normalfont From: $MAIL_FROM}
-\rfoot{$MAIL_DATE}
-\cfoot{}
-\lfoot{Page \thepage\ of \pageref{LastPage}}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
 \renewcommand{\headrulewidth}{0.6pt}
 \renewcommand{\footrulewidth}{0.2pt}
 \setDefaultTransitions{\fontspec{DejaVu Sans Mono}}{}
@@ -41,9 +38,9 @@ EOF
 
 cd $WORKDIR
 xelatex $TEMPTEX && xelatex $TEMPTEX > latex.log
-pdfnup output.pdf --frame true --scale 0.95 --paper letter > nup.log
-lpr output-nup.pdf
-
-rm -rf $WORKDIR
+pdfnup output.pdf --frame true --scale 0.95 --paper letter --preamble "\usepackage{fancyhdr} \pagestyle{fancy} \lhead{\bfseries Subject: $SUBJECT\\\\\normalfont From: $MAIL_FROM} \rhead{$MAIL_DATE}" --no-tidy &> nup.log
+#lpr output-nup.pdf
+#
+#rm -rf $WORKDIR
 
 
