@@ -10,7 +10,7 @@ cat > $INPUTFILE
 
 MAIL_DATE="$(formail -czx Date: < $INPUTFILE)"
 MAIL_FROM="$(formail -czx From: < $INPUTFILE)"
-SUBJECT="$(formail -czx Subject: < $INPUTFILE)"
+SUBJECT="$(formail -czx Subject: < $INPUTFILE | sed 's/&/\\&/g')"
 
 cat > $TEMPTEX <<EOF
 \documentclass{article}
